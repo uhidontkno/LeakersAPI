@@ -8,35 +8,35 @@ const app = express();
 const port = 3000;
 
 app.get("/", async (req, res) => {
-  const jsonData = await scrapeGoogleSheet();
+  const jsonData = await scrapeSheet();
   res.json(jsonData);
 });
 
 app.get("/json", async (req, res) => {
-  const jsonData = await scrapeGoogleSheet();
+  const jsonData = await scrapeSheet();
   res.json(jsonData);
 });
 
 app.get("/csv", async (req, res) => {
-  const csvData = await scrapeGoogleSheetCSV();
+  const csvData = await scrapeSheetCSV();
   res.send(csvData);
 });
 
 app.get("/ids", async (req, res) => {
   if (idscache.toString() == "") {
-    await scrapeGoogleSheet();
+    await scrapeSheet();
   }
   res.send(idscache);
 });
 
 app.get("/mentions", async (req, res) => {
   if (mentionscache.toString() == "") {
-    await scrapeGoogleSheet();
+    await scrapeSheet();
   }
   res.send(mentionscache);
 });
 
-async function scrapeGoogleSheet() {
+async function scrapeSheet() {
   let mentions = [];
   let usernames = [];
   let reasons = [];
@@ -96,27 +96,11 @@ async function scrapeGoogleSheet() {
     return [];
   }
 }
-
-async function scrapeGoogleSheetCSV() {
-  const jsonData = await scrapeGoogleSheet();
+async function scrapeSheetCSV() {
+  const jsonData = await scrapeSheet();
   const csvData = jsonData.map((entry) => Object.values(entry).join(","));
   return csvData.join("\n");
 }
-
-async function scrapeTile(tile) {
-  try {
-    const response = await axios.get(
-      `https://docs.google.com/spreadsheets/d/1t3Prko-nEoxpBnNotYUS3fsYeZli-ASr9mXwXYRj96U/edit#gid=0`,
-    );
-    const $ = cheerio.load(response.data);
-    const tileData = $(`#${tile}`).text().trim();
-    return tileData;
-  } catch (error) {
-    console.error("Error:", error.message);
-    return "";
-  }
-}
-
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
