@@ -10,5 +10,7 @@ API for the public link leakers doc by Deblok
 <br />
 There are no ratelimits.
 
-## Bot Invite:
-A Discord Bot has already been made for it by sparkowe (https://github.com/fidind3211), you can invite it here: https://discord.com/api/oauth2/authorize?client_id=1189282780425760888&permissions=8&scope=bot
+## Official Bot
+The official Discord bot for this repo is open source on GitHub and can be invited. 
+https://discord.com/api/oauth2/authorize?client_id=1189290892486516737&permissions=274877908996&scope=bot%20applications.commands
+The bot is also open source at https://github.com/uhidontkno/AntiLinkLeak
